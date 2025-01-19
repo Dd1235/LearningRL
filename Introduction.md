@@ -30,7 +30,10 @@ $$
 
 $ \gamma^t $ is the discount rate, its between 0 and 1, and tells you how much you value future rewards. It its zero you only care about the immediate reward, if its 1 you care about all future rewards equally. 
 
-(Question: why is it only between 0 and 1? Isn't it sometimes better to value future rewards more than immediate ones? Valuing immediate rewards more seems to be one of those very dumb human things. Reminds me of the experiment where kids are given a choice between having a chocholate now or waiting for 10 more minutes, and having two instead. Same for investors prioritizing short term gains over long term ones. Fretting over small losses during turbulances, instead of looking at the long term growth of the market. Shouldn't we try and remove this dumb human bias from our algorithms?)
+(Question: why is it only between 0 and 1? Isn't it sometimes better to value future rewards more than immediate ones? Valuing immediate rewards more seems to be one of those very dumb human things. Reminds me of the experiment where kids are given a choice between having a chocholate now or waiting for 10 more minutes, and having two instead. Same for investors prioritizing short term gains over long term ones. Fretting over small losses during turbulances, instead of looking at the long term growth of the market. Shouldn't we try and remove this dumb human bias from our algorithms?
+
+More thoughts: The questions actually seems dumb considering most rl problems deal with non stationary environments. If you're playing a game of chess, you don't know what the opponent will do, how could you 'measure' future rewards properly? Makes sense to prioritize immediate gains? Is this the right answer?)
+
 
 
 We model the environment as a Markov Decision Process (MDP). There is a probability of going from my current state and action to another state. Makes it hard to optimize these policies.
@@ -44,11 +47,7 @@ Identified in early 1960s by Minsky.
 
 ## some more stuff
 
-Here’s a well-structured and formatted version of your notes:
-
 ---
-
-## Reinforcement Learning Notes
 
 ### **Dense vs Sparse Rewards**
 - **Dense Rewards**: Rewards are provided frequently, offering more immediate feedback for the agent's actions.
