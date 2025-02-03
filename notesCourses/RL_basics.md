@@ -567,4 +567,249 @@ def update_q_table(state, action, reward, new_state):
     old_value = Q[state, action]
     next_max = max(Q[new_state])
     Q[state,action] = (1-alpha)*old_value + alpha * (reward + gamma*next_max)
+
+reward_per_learned_episode = []
+
+policy = get_policy()
+for episode in range(num_episodes):
+    state, info = env.reset()
+    terminated = False
+    episode_reward = 0
+    while not terminateed:
+        action = policy[state]
+        new_state, reward, terminated, truncated, info = env.step(action)
+        state = new_state
+        episode_reward += reward
+    reward_per_learned_episode.append(episode_reward)
+```
+### Q learning evaluation
+
+```Python
+import numpy as np
+import matplotlib.pyplot as plt
+
+avg_random_reward = np.mean(reward_per_random_episode)
+avg_learned_reward = np.mean(reward_per_learned_episode)
+
+plt.bar(['Random Policy', 'Learned Policy'],
+        [avg_random_reward, avg_learned_reward],
+        color = ['blue', 'green'])
+
+plt.title('Average reward per episode')
+plt.ylabel('Average reward')
+plt.show()
+```
+
+# ch 4 
+
+## Expected SARSA
+
+$$
+Q(s,a) = (1-\alpha)Q(s,a) + \alpha(r + \gamma E{Q(s',A)})
+$$
+
+- takes into account all actions
+
+E{Q(s',A)} = Sum(Prob(a) * Q(s',a) for a in A)
+
+- random actions -> equal probabilities
+
+E{Q(s',A)} = Mean(Q(s',a) for a in A)
+
+```Python
+env = gym.make('FrozenLake-v1', is_slippery=False)
+num_states = env.observation_space.n
+num_actions = env.action_space.n
+Q = np.zeros((num_states, num_actions))
+
+gamma = 0.9
+alpha= 0.1
+num_episodes = 1000
+
+def update_q_table(state, action, next_state, reward):
+    expected_q = np.mean(Q[next_state])
+    Q[state, action] = (1-alpha)*Q[state, action] + alpha * (reward + gamma*expected_q)
+
+for i in range(num_episodes):
+    state, info = env.reset()np
+    terminated = False
+    while not terminated:
+        action = env.action_space.sample()
+        next_state, reward, terminated, truncated, info = env.step(action)
+        update_q_table(state, action, next_state, reward)
+        state = next_state
+
+policy = {state: np.argmax(Q[state]) for state in range(num_states)}
+```
+
+# Double Q-Learning
+
+## Q learning
+- overestimates Q-values by updating based on max Q
+- might lead to suboptimal policy learning
+
+## Double Q-learning
+
+- maintains two Q-tables
+- each table updated based on the other
+- reduces risk of Q-values overestimation
+
+- randomly select a table
+
+$$
+Q_0(s,a) = (1-\alpha)Q_0(s,a) + \alpha(r + \gamma Q_1(s', max_a))
+$$
+
+
+$$
+Q_1(s,a) = (1-\alpha)Q_1(s,a) + \alpha(r + \gamma Q_0(s', max_a))
+$$
+
+- reduces overestimation bias
+- alternates between Q_0 and Q_1 updates
+- both tables contribute to learning process
+
+```Python
+env = gym.make('FrozenLake-v1', is_slippery = False)
+
+num_states = env.observation_space.n
+n_actions = env.action_space.n
+Q = [np.zeros((num_states, num_actions)) ]*2
+
+num_episodes = 1000
+alpha = 0.5
+gamma = 0.99
+
+def update_q_tables(states, action, reward, nexxt_state):
+    i = np.random.randint(2)
+    best_next_action = np.argmax(Q[i][next_state])
+    Q[i][state, action]= (1 - alpha)*Q[i][state, action] + alpha * (reward + gamma*Q[i-i][next_state, best_next_action])
+
+for episodes in range(num_episodes):
+    state, info = env.reset()
+    termianted = False
+
+    while not terminated:
+        action = np.random.choice(n_actions)
+        next_state, reward, terminated, truncated, info = env.step(action)
+        update_q_tables(state, action, reward, next_state)
+        state = next_state
+
+final_Q = np.mean(Q, axis = 0) # either the average or
+final_Q = Q[0] + Q[1] # sum of the two tables
+
+policy = {state: np.argmax(final_Q[state]) for state in range(num_states)}
+```
+
+## Balancing exploration and exploitation
+
+
+- till now with Temporal difference methods we have chosen actions randomly.
+- prevents from optimizing strategy based on learned Q-values
+
+```Python
+env = gym.make('FrozenLake', is_slippery=True)
+
+action_size = env.action_space.n
+state_size = env.observation_space.n
+Q = np.zeros((state_size, action_size))
+
+alpha = 0.1
+gamma = 0.99
+total_episodes = 10_000
+
+def epsilon_greedy(state):
+    if np.random.rand() < epsilon:
+        return env.action_space.sample()
+    else:
+        acton = np.argmax(Q[state,:]) # exploit
+
+    return action
+
+epsilon = 0.9
+rewards_eps_greedy = []
+
+for episode in range(total_episodes):
+    state, info = env.reset()
+    terminated = False
+    episode_reward = 0
+    while not terminateed:
+        action = epsilon_greedy(state)
+        next_state, reward, terminated, truncated, info = env.step(action)
+        Q[state, action] = (1-alpha)*Q[state, action] + alpha*(reward + gamma*np.max(Q[next_state, :]))
+        episode_reward += reward
+        state = next_state
+    rewards_eps_greedy.append(episode_reward)
+```
+
+Training decayed epsilon_greedy
+
+```Python
+epsilon = 1.0
+min_epsilon = 0.01
+epsilon_decay = 0.999
+
+rewards_decay_eps_greedy = []
+
+for episode in range(total_episodes):
+    state, info = env.reset()
+    terminated = False
+    episode_reward = 0
+    while not terminated:
+        action = epsilon_greedy(state)
+        next_state, reward, terminated, truncated, info = env.step(action)
+        Q[state, action] = (1-alpha)*Q[state, action] + alpha*(reward + gamma*np.max(Q[next_state, :]))
+        episode_reward += reward
+        state = next_state
+    rewards_decay_eps_greedy.append(episode_reward)
+    epsilon = max(min_epsilon, epsilon*epsilon_decay)
+    epsilon = max(min_epsilon, epsilon*epsilon_decay)
+```
+
+### comparing Strategies
+
+```Python
+avg_eps_greedy = np.mean(rewards_eps_greedy)
+avg_decay_eps_greedy = np.mean(rewards_decay_eps_greedy)
+plt.bar(['Epsilon Greedy', 'Decayed Epsilon Greedy'],
+        [avg_eps_greedy, avg_decay_eps_greedy],
+        color = ['blue', 'green'])
+plt.title('Average reward per episode')
+plt.ylabel('Average reward')
+plt.show()
+```
+### Multi-armed bandit problem
+
+```Python
+# Create a 10-armed bandit
+true_bandit_probs, counts, values, rewards, selected_arms = create_multi_armed_bandit(10)
+
+for i in range(n_iterations): 
+  	# Select an arm
+    arm = epsilon_greedy()
+    # Compute the received reward
+    reward = np.random.rand() < true_bandit_probs[arm]
+    rewards[i] = reward
+    selected_arms[i] = arm
+    counts[arm] += 1
+    values[arm] += (reward - values[arm]) / counts[arm]
+    # Update epsilon
+    epsilon = max(min_epsilon, epsilon * epsilon_decay)
+
+# Initialize the selection percentages with zeros
+selections_percentage = np.zeros((n_iterations, n_bandits))
+for i in range(n_iterations):
+    selections_percentage[i, selected_arms[i]] = 1
+# Compute the cumulative selection percentages 
+selections_percentage = np.cumsum(selections_percentage, axis=0) / np.arange(1, n_iterations + 1).reshape(-1, 1)
+for arm in range(n_bandits):
+  	# Plot the cumulative selection percentage for each arm
+    plt.plot(selections_percentage[:,arm], label=f'Bandit #{arm+1}')
+plt.xlabel('Iteration Number')
+plt.ylabel('Percentage of Bandit Selections (%)')
+plt.legend()
+plt.show()
+for i, prob in enumerate(true_bandit_probs, 1):
+    print(f"Bandit #{i} -> {prob:.2f}")
+
 ```

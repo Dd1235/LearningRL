@@ -117,7 +117,7 @@ Answer: You should choose the action with the highest estimated value. This is t
 
 - Numerical preference for each action a, $ H_t(a) \in  \mathbb{R} $.
 - Larger preference -> more often taken
-- no interpretation in terms of reward
+- no interpretation in terms of reward, only relative preference of one action over the other is important.
 - action probabilities are determined by the *softmax function* (ie Gibbs or Boltzmann distribution)
 
 $$
@@ -127,5 +127,22 @@ $$
 - $ \pi_t(a) $ is the probability of selecting action a at time t.
 
 - intially all action preferences are same
+- natural learning algorithm for soft-max action preferences based on the idea of *stochastic gradient ascent*.
 
-# To be continued
+After select $ A_t $ and receiving reward $ R_t $
+
+$$
+H_{t+1} (A_t) \doteq H_t(A_t) + \alpha (R_t - \bar{R_t})(1 - \pi_t(A_t)) 
+$$
+and for all a ≠ $ A_t $
+$$
+H_{t+1} (a) \doteq H_t(a) - \alpha (R_t - \bar{R_t}) \pi_t(a)
+$$
+
+- $ \alpha > 0 $ - step-size parameter
+- $ \bar{R_t} $ - average of the rewards upto but not including time t
+- $ \bar{R_t} $ is the baseline 
+- if reward is higher than baseline, then the probability of selecting that action is increased, and vice versa.
+
+(code to be implemented)
+
