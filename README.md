@@ -4,7 +4,8 @@ My attempt at teaching myself some Reinforcement Learning, and documenting stuff
 
 ## Table of Contents
 
-- [Introduction](Introduction.md)
+- [Introduction](SBnotes/Introduction.md)
+- [Ch2 Multi Armed Bandits](SBnotes/MultiArmedBandits.md)
 
 PS the markdown might not look right in the github preview for formuale, but works with any markdown previewer in VSCode or any other md previewer.
 

@@ -146,3 +146,10 @@ $$
 
 (code to be implemented)
 
+(to do: The bandit algorithms as Stochastic Gradient ascent reading left out)
+
+## 2.9 Assiciative Search (Contexual Bandits)
+
+- so far: nonassociative tasks, no need to assiciate different actions with different situations. Either find single best action when task is stationary or find best aciton as it changes when task is non-stationary. 
+- eg. suppose the slot machine changes the color of its display as it changes its action values. You can learn a policy assciating each task, with the color of the display.
+- this is an *associative search* task, where you *search* for best actions, and *assiation* of these actions with situations they are best at. 
