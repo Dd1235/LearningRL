@@ -3,8 +3,6 @@
 
 ## 3.1 The Agent-Environment Interface
 
-agent, environment, reewards, state, action, reward, new state, trajectory, finite el, dynamics, Markov property, absolute control, agent-env boundary,learning goal-drected behaviour, signals, transition graph
-
 The MDP framework says that for learning goal-directed behaviour, only three signals are required.
 
 Action - represent choices made by the agent, this could be as high level or low level, eg for driving a car it could be the movement of a muscle or moving in a direciton
