@@ -55,3 +55,39 @@ $$
 example transition graph from example 3.3 , recycling robot
 
 ![](images/tg.png)
+
+## 3.2 Goals and Rewards
+
+reward signal is to indicate *what* you want to achieve not *how* you want to achieve it.
+
+## 3.3 Returns and Episodes
+
+Episodic tasks: non terminal states $ \mathbf{S} $ , and states including the terminal state $ \mathbf{S^+} $
+They come to an end after some finite time steps and the agent-environment interaction is divided into episodes
+
+here we can have $ G_t = R_{t+1} + R_{t+2} + R_{t+3} + ... + R_T $ where T is the final time step
+
+But for continuing tasks
+
+$$
+G_t \doteq \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
+$$
+
+for $ \gamma $ = 0, said to be myopic
+
+$$
+G_t = R_{t+1} + \gamma G_{t+1}
+$$
+
+## 3.4 Unified Notation for Episodic and Continuing tasks
+
+*absorbing state* - termination state, goes to itself with reward 0
+
+$$
+G_t \doteq \sum{k=t+1}^{T} \gamma^{k-t-1} R_k
+$$
+
+## 3.5 Policies and Value Functions
+
+
+
