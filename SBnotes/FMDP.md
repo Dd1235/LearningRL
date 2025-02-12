@@ -90,4 +90,93 @@ $$
 ## 3.5 Policies and Value Functions
 
 
+- The *value function* of a state *s* under a policy $ \pi $ , denoted $ v_{\pi}(s) $ is the expected return when starting in s and following $ \pi $ thereafter
+
+$$
+v_{\pi}(s) \doteq E_{\pi}[G_t | S_t = s] = E_{\pi}[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1} | S_t = s] 
+$$
+
+- value of the terminal state is always 0
+- The function $ v_{\pi} $ is the state-value function for policy $ \pi $
+
+- The value of taking action *a* in state *s* under a policy $ \pi $ is $ q_{\pi}(s, a) $ is the expected return starting from s, taking the action a, and thereafter following policy $ \pi $
+
+$$
+q_{\pi}(s, a) \doteq E_{\pi}[G_t | S_t = s, A_t = a] = E_{\pi}[\sum_{k=0}^{\infty} \gamma^k R_{t+k+1} | S_t = s, A_t = a]
+$$
+
+- The function $ q_{\pi} $ is the action-value function for policy $ \pi $
+
+- Can estimate these value functions by taking averages of the returns, and the averages per state converge to the value function, and teh average of returns per state-acction converge to the aciton-value function - Monte Carlo methods
+
+- Not practical to keep separate averages for each state, instead agent can maintain them are parameterized functions ( to be seen in chapter 5)
+
+- Bellman equation for $ v_{\pi} $
+![](images/bellman_eq_v.png)
+
+- each open circle represents a state, and each solid circle represents a state-action pair. Starting from s, agent could take any of some set of actions, based on its policy. Environment could respond with one of several states, along with a reward r based on the dynamics given by the function p.
+
+![](images/backup_v.png)
+
+- we call these backup diagrams because they diagram relationships that form the basis of the update or *backup* operations that are at the ehart of rl methods. These operations transfer value information back to a state from its successor states.
+
+(bunch of examples and exercises here to be done)
+
+## 3.6 Optimal Policies and Optimal Value Functions
+
+- For a finite MDP
+
+$$
+\pi \geq \pi' \text{ iff } v_{\pi}(s) \geq v_{\pi'}(s) \quad \forall s \in S
+$$
+
+- All the optimal policies are denoted by \( \pi_* \), they share the same state-value function called the *optimal state-value function* denoted by \( v_*(s) \)
+
+$$
+v_*(s) \doteq \max_{\pi} v_{\pi}(s) \quad \forall s \in S
+$$
+
+- They also share the same *optimal action-value function* \( q_* \)
+
+$$
+q_*(s, a) \doteq \max_{\pi} q_{\pi}(s, a) \quad \forall s \in S, a \in A
+$$
+
+$$
+q_*(s, a) = \mathbf{E}[R_{t+1} + \gamma v_*(S_{t+1}) \mid S_t = s, A_t = a]
+$$
+
+- Bellman optimality equation for \( q_* \)
+
+$$
+q_*(s, a) = \mathbf{E}[R_{t+1} + \gamma \max_{a'} q_*(S_{t+1}, a') \mid S_t = s, A_t = a]
+$$
+
+The Bellman optimality equation forms a system of \( n \) equations with \( n \) unknowns, where \( n \) is the number of states. Given the transition dynamics \( p(s' | s, a) \), these equations can be solved numerically.
+
+Once \( v_*(s) \) is known, an optimal policy can be determined by selecting actions that achieve the maximum value in the Bellman equation:
+
+$$
+\pi^*(s) = \arg\max_{a} \sum_{s'} p(s' | s, a) \left[ r(s, a, s') + \gamma v_*(s') \right]
+$$
+
+Any policy that is **greedy** with respect to \( v_* \) is optimal. The term "greedy" means selecting actions based only on their immediate effect, but since \( v_* \) accounts for all future rewards, the policy remains optimal in the long-term.
+
+Using \( q_*(s, a) \), action selection becomes even simpler. Instead of computing a one-step lookahead search, an optimal action can be chosen directly:
+
+$$
+\pi^*(s) = \arg\max_{a} q_*(s, a)
+$$
+
+The function \( q_*(s, a) \) effectively caches the results of all one-step lookaheads, making it unnecessary to know transition dynamics \( p(s' | s, a) \). This is particularly useful in model-free settings where the environment’s dynamics are unknown.
+
+![](images/backup2.png)
+
+(examples and exercises not done)
+
+## 3.7 Optimality and Approximation
+
+- computing the exact optimal policy using tabular methods is often infeasible in real life applications (eg. in robotics, games, and finance). So we instead approximate it using approximation methods like monte carlo or function approximation.
+
+- There is an advantage of RL here, the online nature of it makes it so that it prioritizes frequently occuring states. Eg the TD-Gammon plays expert level backgammon but does poorly on rare board configuraitons.
 
