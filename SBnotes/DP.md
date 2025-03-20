@@ -22,3 +22,28 @@ $$
 - updates done in  a sweep through the state space
 
 ![](images/4.1.png)
+
+## 4.2 Policy Improvement
+
+Let $ \pi , \pi' $ be deterministic policies such that,
+$$
+q_\pi(s, \pi'(s)) \ge v_{\pi}(s) \quad \forall s \in \mathbf{S}
+$$
+Then $ \pi' $ is at least as good as $ \pi $
+Also,
+$$
+v_{\pi'}(s) \ge v_{\pi}(s)  \quad \forall s \in \mathbf{S}
+$$
+
+### Greedy Policy Improvement step
+
+The process of making a new policy from the old one, using a greedy strategy with respect to the value function of the old policy is known as Policy Improvement
+
+\[
+\pi'(s) \doteq \arg\max_a q_\pi(s, a)  \\ 
+= \arg\max_a \mathbb{E}\left[R_{t+1} + \gamma v_\pi(S_{t+1}) \mid S_t = s, A_t = a \right]  \\
+= \arg\max_a \sum_{s', r} p(s', r \mid s, a) \left[ r + \gamma v_\pi(s') \right]
+\]
+
+Holds for stochastic policies Also
+
