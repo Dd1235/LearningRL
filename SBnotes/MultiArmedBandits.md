@@ -153,3 +153,18 @@ $$
 - so far: nonassociative tasks, no need to assiciate different actions with different situations. Either find single best action when task is stationary or find best aciton as it changes when task is non-stationary. 
 - eg. suppose the slot machine changes the color of its display as it changes its action values. You can learn a policy assciating each task, with the color of the display.
 - this is an *associative search* task, where you *search* for best actions, and *assiation* of these actions with situations they are best at. 
+
+## some more stuff
+
+- asymptotic correctness
+- regret optimality (cannot fall faster than logT)
+- pac (probably approximately correct) 
+    - with 1 - \delta probability I am within 1 - \epsilon correct
+    - P(q*(a) >= q*(a*)-\epsilon) > 1 - \delta 
+
+### PAC
+
+- median elimination
+    - round based, each round try a restaurant x times, average the results, get rid of the lower half, so eliminate
+    - will not necessarily give the optimal one
+    
