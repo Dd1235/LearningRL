@@ -9,12 +9,16 @@ My attempt at teaching myself some Reinforcement Learning, and documenting stuff
 - [Ch3 Finite MDP](SBnotes/FMDP.md)
 - [Ch4 DP](SBnotes/DP.md)
 
-
 PS the markdown might not look right in the github preview for formuale, but works with any markdown previewer in VSCode or any other md previewer.
+
+There are also some misc notes in the SBnotes/ folder.
 
 ## Codes
 
 - [Bandits](code/Bandits)
 
-Implementation of Multi armed bandits problem, using epison greedy, and upper confidence bound action method, and sample average and constant step estimators. Both stationary(normal distirbution) and non-stationary environments simulated.
+    - Implementation of Multi armed bandits problem, using epison greedy, and upper confidence bound action method, and sample average and constant step estimators. Both stationary(normal distirbution) and non-stationary environments simulated.
+    - added Median elimination with stationary distribution(simple case with std = 1 for all arms)
 
+- [TicTactoe](code/TicTacToe)
+    - using TD(0)
