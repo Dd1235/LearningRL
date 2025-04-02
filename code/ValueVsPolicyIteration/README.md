@@ -126,7 +126,7 @@ python main.py
 
 # MDP, Policy Iteration, Value Iteration Intuition
 
-Formal description is in my notes [here](../SBnotes/FMDP.md)
+Formal description is in my notes [here](.../SBnotes/FMDP.md)
 
 Imagine you are going through a new city you moved into. There are states (locations) you can be in, say at the Museum or the Park, and there are actions you can take in a state, to move to a new state and get some reward. Say you take the metro from the Museum to the Park and receive some happiness +x.
 
