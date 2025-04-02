@@ -1,6 +1,130 @@
+# FrozenLake RL: Policy Iteration vs Value Iteration
+
+Implemented a 4x4 deterministic FrozenLake setting and compared Policy vs Value Iteration.
+
+## Environment
+- A 4x4 deterministic FrozenLake grid
+- Holes (H) terminate the episode with 0 reward
+- Goal (G) gives a reward of 1
+- Start (S) is at the top-left corner
+
+```
+S . . .
+. H . H
+. . . H
+H . . G
+```
+
+### State Numbering (row-major):
+```
+ 0  1  2  3
+ 4  5  6  7
+ 8  9 10 11
+12 13 14 15
+```
+
+### Action Encoding:
+- 0 = Left
+- 1 = Down
+- 2 = Right
+- 3 = Up
+
+---
+
+## Algorithms Implemented
+
+### 1. Policy Iteration
+- Evaluate current policy until convergence
+- Improve the policy greedily using the current value function
+- Repeat until policy stabilizes
+
+### 2. Value Iteration
+- Iteratively update V(s) using the Bellman optimality equation
+- Derive policy greedily from the final value function
+
+---
+
+## Outputs
+
+Both methods converge to the same optimal policy and value function.
+
+### [Policy Iteration]
+```
+Converged in 7 iterations.
+Time taken = 0.000713 seconds.
+Policy (reshaper as 4x4 for clarity):
+[[1 2 1 0]
+ [1 0 1 0]
+ [2 1 1 0]
+ [0 2 2 0]]
+Value function V(s):
+[[0.59  0.656 0.729 0.656]
+ [0.656 0.    0.81  0.   ]
+ [0.729 0.81  0.9   0.   ]
+ [0.    0.9   1.    0.   ]]
+Success Rate over 1000 trials = 1.00
+```
+
+### [Value Iteration]
+```
+Converged in 7 iterations.
+Time taken = 0.000235 seconds.
+Policy (reshaped as 4x4 for clarity):
+[[1 2 1 0]
+ [1 0 1 0]
+ [2 1 1 0]
+ [0 2 2 0]]
+Value function V(s):
+[[0.59  0.656 0.729 0.656]
+ [0.656 0.    0.81  0.   ]
+ [0.729 0.81  0.9   0.   ]
+ [0.    0.9   1.    0.   ]]
+Success Rate over 1000 trials = 1.00
+```
+
+###  Performance
+- 100% success rate over 1000 rollouts for both methods
+-  **Value Iteration** is typically faster per iteration but may require more iterations
+- **Policy Iteration** converges in fewer steps but each step is more computationally expensive
+- In this run, both converged in **7 outer loop iterations**, but **Policy Iteration** took longer per iteration
+
+---
+
+## Visualizations
+
+Generated optimal policy arrows over the 4x4 grid:
+
+| Method            | Policy Visualization                          |
+|------------------|-----------------------------------------------|
+| Policy Iteration | ![Policy Iteration](policy_iteration_policy.png) |
+| Value Iteration  | ![Value Iteration](value_iteration_policy.png)  |
+
+---
+
+##  To Run 
+
+```bash
+python main.py
+```
+
+---
+
+## 📁 Project Structure
+```
+.
+├── main.py              # Main Python file
+├── policy_iteration_policy.png   # Visualization from Policy Iteration
+├── value_iteration_policy.png    # Visualization from Value Iteration
+└── README.md                     # This file
+```
+---
+
+## References
+- Sutton & Barto
+- OpenAI Gym's FrozenLake
 
 
-# MDP, Policy Iteration, Value Iteration 
+# MDP, Policy Iteration, Value Iteration Intuition
 
 Formal description is in my notes [here](../SBnotes/FMDP.md)
 
