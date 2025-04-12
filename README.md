@@ -8,6 +8,10 @@ My attempt at teaching myself some Reinforcement Learning, and documenting stuff
 - [Ch2 Multi Armed Bandits](SBnotes/MultiArmedBandits.md)
 - [Ch3 Finite MDP](SBnotes/FMDP.md)
 - [Ch4 DP](SBnotes/DP.md)
+- [overview of RL methods](SBnotes/OverviewMethods.md)
+- [Ch5 5.1 to 5.4](SBnotes/5.1TO5.4.pdf)
+- [some misc notes on TD and Q](SBnotes/TD_Q_SARSA.md)
+
 
 PS the markdown might not look right in the github preview for formuale, but works with any markdown previewer in VSCode or any other md previewer.
 
