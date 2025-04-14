@@ -39,3 +39,6 @@ for episode in range(num_episodes):
         state = next_state
 ```
 
+
+# to be added from slides
+
